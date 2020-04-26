@@ -84,4 +84,6 @@ public interface SuDoKuUI {
      * Display the modal "About Doane SuDoKu" dialog box.
      */
     void displayAbout();
+
+    void pauseStatus(boolean pauseFlag);
 }

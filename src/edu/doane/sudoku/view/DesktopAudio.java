@@ -135,6 +135,7 @@ public class DesktopAudio {
         if(eraseNumberMedia != null) {
             eraseNumberMedia.stop();
             eraseNumberMedia.setStartTime(Duration.seconds(0));
+            eraseNumberMedia.play();
         }
     }
 

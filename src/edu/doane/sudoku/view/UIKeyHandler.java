@@ -1,6 +1,9 @@
 package edu.doane.sudoku.view;
 
+import edu.doane.sudoku.controller.DesktopTimer;
 import edu.doane.sudoku.controller.SuDoKuController;
+import edu.doane.sudoku.model.Game;
+import edu.doane.sudoku.model.GameGrid;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
@@ -31,6 +34,8 @@ public class UIKeyHandler implements EventHandler<KeyEvent> {
      */
     private SuDoKuController controller;
 
+
+
     /**
      * Construct the key handler.
      *
@@ -50,7 +55,11 @@ public class UIKeyHandler implements EventHandler<KeyEvent> {
         // get the character typed
         char c = event.getCode().getChar().charAt(0);
 
-        // and handle the input
+        if( c == ' ') {
+            c = '0';
+        }
+
+            // and handle the input
         switch (c) {
             // n toggles notes mode
             case 'n':
@@ -60,6 +69,7 @@ public class UIKeyHandler implements EventHandler<KeyEvent> {
 
                 break;
             // 1 - 9 sets number or note
+            case '0':
             case '1':
             case '2':
             case '3':
@@ -69,11 +79,18 @@ public class UIKeyHandler implements EventHandler<KeyEvent> {
             case '7':
             case '8':
             case '9':
-                if (notesMode) {
-                    setNote(c);
-                } else {
-                    setNumber(c);
+                if (!controller.isCelebrated()) {
+                    if (notesMode) {
+                        setNote(c);
+                    } else {
+                        setNumber(c);
+                    }
                 }
+                break;
+
+            case 'p':
+            case 'P':
+                controller.pause();
                 break;
 
         }

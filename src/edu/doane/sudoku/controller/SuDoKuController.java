@@ -1,5 +1,7 @@
 package edu.doane.sudoku.controller;
 
+import java.io.IOException;
+
 /**
  * Interface for the controller in the SuDoKu MVC architecture.
  *
@@ -62,4 +64,12 @@ public interface SuDoKuController {
      * model and view grids.
      */
     void resetGrids();
+
+    void pause();
+
+    void displayHowToPlay();
+
+    void updateScoreBoard() throws IOException;
+
+    boolean isCelebrated();
 }

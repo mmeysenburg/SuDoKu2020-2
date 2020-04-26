@@ -4,6 +4,11 @@ import edu.doane.sudoku.model.Game;
 import edu.doane.sudoku.model.GameGrid;
 import edu.doane.sudoku.persistence.Persistence;
 import edu.doane.sudoku.view.SuDoKuUI;
+import edu.doane.sudoku.view.UIStatusBar;
+import javafx.scene.control.Alert;
+
+import java.io.*;
+import java.util.Scanner;
 
 /**
  * Implementation of the controller interface for the desktop app.
@@ -38,6 +43,9 @@ public class DesktopController implements SuDoKuController {
      * or not.
      */
     private boolean celebrated;
+
+    private boolean pauseFlag = false;
+    private String status;
 
     /**
      * Construct a new instance of this controller.
@@ -104,6 +112,14 @@ public class DesktopController implements SuDoKuController {
         if (grid.isComplete() && grid.validate() && !celebrated) {
             // celebrate! and stop the timer
             celebrated = true;
+
+            //update scoreboard
+            try {
+                updateScoreBoard();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+
             timer.stopTimer();
             view.celebrate(game.getID(), timer.toString());
         }
@@ -223,6 +239,77 @@ public class DesktopController implements SuDoKuController {
                 }
             }
         }
+
+        celebrated = false;
+        timer.startTimer();
+    }
+
+    public void pause() {
+
+        if (pauseFlag == false) {
+            view.clearGrid(false);
+            view.pauseStatus(pauseFlag);
+            timer.stopTimer();
+            pauseFlag = true;
+        }
+        else {
+
+            for (int row = 0; row < 9; row++) {
+                for (int col = 0; col < 9; col++) {
+                    if(grid.isGiven(row,col)) {
+                        view.setGiven(row, col, grid.getNumber(row, col));
+                    }
+                    else{
+                            view.setNumber(row, col, grid.getNumber(row, col));
+                        }
+                }
+            }
+
+                view.pauseStatus(pauseFlag);
+                timer.startTimer();
+                pauseFlag = false;
+            }
+
+    }
+
+    @Override
+    public void displayHowToPlay() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("How to Play");
+        alert.setHeaderText(null);
+        alert.setContentText("This is information on how to play.");
+        alert.showAndWait();
+    }
+
+    public void updateScoreBoard() throws IOException {
+
+        double score = Double.parseDouble(timer.toString());
+
+        Scanner scanner = new Scanner(new File("scores.txt"));
+        FileWriter fw = new FileWriter("scores.txt");
+        PrintWriter pw = new PrintWriter(fw);
+
+        while(scanner.hasNextLine()){
+
+            double record = Double.parseDouble(scanner.nextLine());
+            if(record == 0.0){
+                pw.println(score);
+                score = record;
+            }
+            else if ( score < record){
+                pw.println(score);
+                score = record;
+            }
+            else{
+                pw.println(record);
+            }
+            scanner.nextLine();
+        }
+        pw.close();
+    }
+
+    public boolean isCelebrated(){
+        return celebrated;
     }
 
 }

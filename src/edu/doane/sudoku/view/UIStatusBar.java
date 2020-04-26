@@ -55,9 +55,9 @@ public class UIStatusBar extends GridPane {
     /**
      * Toggle notes mode off.
      */
-    public final void setNormalMode() {
-        lblNotesMode.setText("(N)otes mode: off");
-    }
+    public final void setNormalMode() { lblNotesMode.setText("(N)otes mode: off"); }
+
+    public final void setPauseMode() { lblNotesMode.setText("Pause Mode"); }
 
     /**
      * Set the time value displayed on the status bar.

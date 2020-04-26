@@ -12,6 +12,7 @@ public class ElapsedTime {
      * Number of seconds, in [0, 59].
      */
     private int seconds;
+    private int milliseconds;
 
     /**
      * Number of minutes in [0, 59].
@@ -44,14 +45,19 @@ public class ElapsedTime {
      * minutes and hours values.
      */
     public void tick() {
-        seconds++;
+
+        milliseconds++;
+        if (milliseconds == 10) {
+            seconds++;
+            milliseconds = 0;
+        }
         if (seconds == 60) {
-            minutes++;
-            seconds = 0;
-            if (minutes == 60) {
-                hours++;
-                minutes = 0;
-            }
+                minutes++;
+                seconds = 0;
+                if (minutes == 60) {
+                    hours++;
+                    minutes = 0;
+                }
         }
     }
 

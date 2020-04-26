@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.Optional;
 
@@ -81,6 +82,9 @@ public class SuDoKu extends Application implements SuDoKuUI {
 
         // configure key events
         scene.setOnKeyPressed(new UIKeyHandler(cells, controller, statusBar));
+
+        //create event for when window is closed
+        primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     }
 
     /**
@@ -140,7 +144,7 @@ public class SuDoKu extends Application implements SuDoKuUI {
      */
     private void configureMenus() {
         Menu mnuGame, mnuHelp;
-        MenuItem mtmNewGame, mtmClearGrid , mtmExit, mtmAbout;
+        MenuItem mtmNewGame, mtmClearGrid , mtmExit, mtmAbout, mtmHowToPlay;
 
         mnuGame = new Menu("_Game");
         mtmNewGame = new MenuItem("_New game");
@@ -179,7 +183,13 @@ public class SuDoKu extends Application implements SuDoKuUI {
             }
         });
 
-        mnuHelp.getItems().addAll(mtmAbout);
+        mtmHowToPlay = new MenuItem("_How to Play");
+        mtmHowToPlay.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) { controller.displayHowToPlay();}
+        });
+
+        mnuHelp.getItems().addAll(mtmAbout, mtmHowToPlay);
 
         mnuBar = new MenuBar(mnuGame, mnuHelp);
     }
@@ -392,5 +402,22 @@ public class SuDoKu extends Application implements SuDoKuUI {
                 "\u00A9" + "2016, 2020");
         
         alert.showAndWait();
+    }
+
+    private void closeWindowEvent(WindowEvent event) {
+
+        if(!confirmExit()) {
+                event.consume();
+        }
+    }
+
+    public void pauseStatus(boolean pauseFlag) {
+
+        if (pauseFlag == false) {
+            statusBar.setPauseMode();
+        }
+        else {
+            statusBar.setNormalMode();
+        }
     }
 }
