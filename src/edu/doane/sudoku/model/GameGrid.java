@@ -51,7 +51,7 @@ public class GameGrid {
      *                                  number is not in [0, 9].
      */
     public boolean setNumber(int row, int col, int number) throws IllegalArgumentException {
-        if (row < 0 || row > 8 || col < 0 || col > 8 || number < 1 || number > 9) {
+        if (row < 0 || row > 8 || col < 0 || col > 8 || number < 0 || number > 9) {
             throw new IllegalArgumentException("Illegal parameters to "
                     + "Grid.setNumber(): (" + row + ", " + col
                     + ", " + number + ")");

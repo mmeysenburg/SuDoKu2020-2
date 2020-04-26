@@ -71,4 +71,9 @@ public class DesktopTimer implements SuDoKuTimer {
     public String toString() {
         return elapsedTime.toString();
     }
+
+    @Override
+    public int getTime() {
+         return elapsedTime.getSeconds();
+    }
 }

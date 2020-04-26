@@ -68,4 +68,8 @@ public class ElapsedTime {
     public String toString() {
         return String.format("%d:%02d:%02d", hours, minutes, seconds);
     }
+
+    public int getSeconds() {
+        return seconds;
+    }
 }

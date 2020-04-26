@@ -82,7 +82,7 @@ public final class Cell {
      * @throws IllegalArgumentException if the number is not in [1, 9].
      */
     public final void setNumber(int number) throws IllegalArgumentException {
-        if (number < 1 || number > 9) {
+        if (number < 0 || number > 9) {
             throw new IllegalArgumentException("Illegal number in "
                     + "Cell.setNumber(): " + number);
         }

@@ -45,7 +45,6 @@ public class DesktopController implements SuDoKuController {
     private boolean celebrated;
 
     private boolean pauseFlag = false;
-    private String status;
 
     /**
      * Construct a new instance of this controller.
@@ -283,7 +282,7 @@ public class DesktopController implements SuDoKuController {
 
     public void updateScoreBoard() throws IOException {
 
-        double score = Double.parseDouble(timer.toString());
+        int score = timer.getTime();
 
         Scanner scanner = new Scanner(new File("scores.txt"));
         FileWriter fw = new FileWriter("scores.txt");
@@ -291,8 +290,8 @@ public class DesktopController implements SuDoKuController {
 
         while(scanner.hasNextLine()){
 
-            double record = Double.parseDouble(scanner.nextLine());
-            if(record == 0.0){
+            int record = Integer.parseInt(scanner.nextLine());
+            if(record == 0){
                 pw.println(score);
                 score = record;
             }

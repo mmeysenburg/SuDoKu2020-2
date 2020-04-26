@@ -40,4 +40,6 @@ public interface SuDoKuTimer {
      * hh:mm:ss format.
      */
     String toString();
+
+    int getTime();
 }
