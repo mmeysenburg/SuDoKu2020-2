@@ -276,7 +276,7 @@ public class DesktopController implements SuDoKuController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("How to Play");
         alert.setHeaderText(null);
-        alert.setContentText("This is information on how to play.");
+        alert.setContentText("Sudoku is played by having 1 through 9 in every row, column, and 3x3 box.");
         alert.showAndWait();
     }
 
